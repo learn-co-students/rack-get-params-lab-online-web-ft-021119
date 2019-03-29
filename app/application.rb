@@ -25,21 +25,19 @@ class Application
       end
     elsif req.path.match(/add/)
       added_item = req.params["item"]
-##IS the item even in our items list?
 
-      # binding.pry
-      # if @@items.!include?(added_item)
-      #else
-        # resp.write "We don't have that item"
-      # end
-
-
-      if @@cart.include?(added_item)
-        resp.write "#{added_item} is already in your cart!"
-      else @@cart.exclude?(added_item)
-        @@cart << added_item
-        resp.write "added #{added_item}"
+      if @@items.include?(added_item)
+        if @@cart.include?(added_item)
+          resp.write "#{added_item} is already in your cart!"
+        else @@cart.exclude?(added_item)
+          @@cart << added_item
+          resp.write "added #{added_item}"
+        end
+      else
+        resp.write "We don't have that item"
       end
+
+
     else
       resp.write "Path Not Found"
     end
